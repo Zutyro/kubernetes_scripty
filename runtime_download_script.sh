@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-apt-get install wget
+sudo apt-get -y install wget
 mkdir runtime_downloads
 
 files=("containerd-1.6.15-linux-amd64.tar.gz" "runc.amd64" "cni-plugins-linux-amd64-v1.2.0.tgz")
@@ -25,7 +25,7 @@ do
 		rm ./runtime_downloads/$file
 		rm ./runtime_downloads/$shasum
 	done
-	echo "${file[$i]} uspesne stahnut a overen"
+	echo "${files[$i]} uspesne stahnut a overen"
 done
 
 wget -q -P runtime_downloads \
