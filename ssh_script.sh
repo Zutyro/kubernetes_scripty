@@ -19,4 +19,8 @@ if [ $4 -eq 1 ]
 		sshpass -p $3 ssh $2@$1 "echo $3 | sudo -S bash /home/zutyro/scripts/ports_master_script.sh"
 		sshpass -p $3 scp "/home/zutyro/scripts/sysctl_config_script.sh" "$2@$1:~/scripts"
 		sshpass -p $3 ssh $2@$1 "echo $3 | sudo -S bash /home/zutyro/scripts/sysctl_config_script.sh"
+		sshpass -p $3 scp "/home/zutyro/scripts/runtime_download_script.sh" "$2@$1:~/scripts"
+		sshpass -p $3 ssh $2@$1 "echo $3 | sudo -S bash /home/zutyro/scripts/runtime_download_script.sh"
+		sshpass -p $3 scp "/home/zutyro/scripts/runtime_install_script.sh" "$2@$1:~/scripts"
+		sshpass -p $3 ssh $2@$1 "echo $3 | sudo -S bash /home/zutyro/scripts/runtime_install_script.sh"
 fi
