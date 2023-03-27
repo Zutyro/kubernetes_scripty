@@ -9,4 +9,4 @@ sudo /sbin/iptables -A INPUT -p tcp --dport 10250 -j ACCEPT
 sudo /sbin/iptables -A INPUT -p tcp --dport 10259 -j ACCEPT
 sudo /sbin/iptables -A INPUT -p tcp --dport 10257 -j ACCEPT
 
-sudo /sbin/iptables-save > tee /etc/iptables/rules.v4
+sudo /sbin/iptables-save | sudo tee /etc/iptables/rules.v4
