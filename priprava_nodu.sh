@@ -12,11 +12,6 @@ else
 fi    
 
 
-echo Instalace potrebnych nastroju
-
-sudo apt install uuid-runtime
-
-
 master_edit() {
     old_hostname=$(ssh ${node[0]} -n -o 'StrictHostKeyChecking accept-new' 'echo $HOSTNAME')
     echo $old_hostname
@@ -40,7 +35,7 @@ worker_edit() {
 
 file="$1"
 
-echo Zmena hostname a uuid vsech nodu
+echo Zmena hostname vsech nodu
 
 
 while IFS=" " read -r line; do
