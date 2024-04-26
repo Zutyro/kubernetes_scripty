@@ -37,13 +37,12 @@ EOF
     kubectl create -f "${user[0]}"-csr.yaml
     kubectl certificate approve user-request-"${user[0]}"
     kubectl get csr user-request-"${user[0]}" -o jsonpath='{.status.certificate}' | base64 -d > "${user[0]}"-user.crt
-    api_server=$(cat .kube/config | grep -i server | sed 's/.*\(https.*\)/\1/g')
-    #cauthority=$(cat .kube/config | grep -i certificate-authority | sed 's/.*: //g' | base64 -d)
+    api_server=$(cat ~/.kube/config | grep -i server | sed 's/.*\(https.*\)/\1/g')
     
-    kubectl --kubeconfig .kube/config-"${user[0]}" config set-cluster kubernetes --server="$api_server" --certificate-authority <(cat .kube/config | grep -i certificate-authority | sed 's/.*: //g' | base64 -d) --embed-certs
-    kubectl --kubeconfig .kube/config-"${user[0]}" config set-credentials "${user[0]}" --client-certificate="${user[0]}"-user.crt --client-key="${user[0]}".pem --embed-certs=true
-    kubectl --kubeconfig .kube/config-"${user[0]}" config set-context default --cluster=kubernetes --user="${user[0]}"
-    kubectl --kubeconfig .kube/config-"${user[0]}" config use-context default
+    kubectl --kubeconfig ~/.kube/config-"${user[0]}" config set-cluster kubernetes --server="$api_server" --certificate-authority <(cat ~/.kube/config | grep -i certificate-authority | sed 's/.*: //g' | base64 -d) --embed-certs
+    kubectl --kubeconfig ~/.kube/config-"${user[0]}" config set-credentials "${user[0]}" --client-certificate="${user[0]}"-user.crt --client-key="${user[0]}".pem --embed-certs=true
+    kubectl --kubeconfig ~/.kube/config-"${user[0]}" config set-context default --cluster=kubernetes --user="${user[0]}"
+    kubectl --kubeconfig ~/.kube/config-"${user[0]}" config use-context default
 
     while IFS=',' read -ra var; do
         for ((i = 0; i < ${#var[$i]}; ++i)); do

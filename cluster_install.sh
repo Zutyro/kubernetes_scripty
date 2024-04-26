@@ -300,11 +300,14 @@ EOF
     sudo apt-mark hold kubectl
     mkdir -p ~/.kube
     scp $node:~/.kube/config ~/.kube/config
-    kubectl --kubeconfig .kube/config config set-cluster kubernetes --server=https://$loadbalancer:6443
+    if [ $highavailability = true ]
+    then
+        kubectl --kubeconfig .kube/config config set-cluster kubernetes --server=https://$loadbalancer:6443
+    fi
     ssh $node -n "kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml"
 }
 
-worker_join () {
+worker_join () { 
     node=$1
     ssh $node -n "sudo $join_command"
 }
@@ -344,7 +347,6 @@ while IFS=" " read -r line; do
     if [ ${machine[1]} = "master" ] && [ $clusterInitialized = false ]
     then
         echo Inicializace clusteru na master nodu ${machine[0]}
-        initNode=$machine
         cluster_init $machine
         clusterInitialized=true
     fi
